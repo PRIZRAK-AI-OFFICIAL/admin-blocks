@@ -27,7 +27,7 @@
         
         <div class="dzenkit-basic-card-body rows_super_list">
             
-            <form class="delete_form_all" action="" method="GET">
+            <div class="delete_form_all">
                 
                 <div class="table-responsive">
         
@@ -59,7 +59,13 @@
                                                         </button>
 
                                                         <ul class="dropdown-menu">
-                                                            <li><a class="icon-trash-empty del d-flex align-items-center" href="{{ route("admin_blocks.position.delete",$row->id) }}">Удалить без подтверждения</a></li>
+                                                            <li>
+                                                                <form action="{{ route("admin_blocks.position.delete",$row->id) }}" method="POST">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button type="submit" class="icon-trash-empty del d-flex align-items-center border-0 bg-transparent">Удалить без подтверждения</button>
+                                                                </form>
+                                                            </li>
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -88,7 +94,7 @@
                         </tbody>
                     </table>
                 </div>
-                </form>
+                </div>
         
             </div>
         </div>

@@ -192,7 +192,7 @@
             --}}
 
 
-            <form class="delete_form_all" action="" method="GET">
+            <div class="delete_form_all">
 
             <div class="table-responsive">
 
@@ -229,7 +229,7 @@
                     <tbody>
                     @if(count($rows)>0)
                         @foreach($rows as $row)
-                        <tr data-url-change="{{ route("admin_blocks.blocks.toogle",$row->id) }}" data-row-id="{{ $row->id }}" data-sort="{{ $row->id }}">
+                        <tr data-row-id="{{ $row->id }}" data-sort="{{ $row->id }}">
                             <td>
                                 <div class="row-nav d-flex">
                                     <div class="form-check">
@@ -278,7 +278,13 @@
 
                                                     {{--<!--<li><a class="icon-trash-empty del d-flex align-items-center delete_row" data-row-id="{{ $row->id }}" href="{{ route("admin_blocks.blocks.delete",$row->id) }}" data-toggle="modal" data-target="#deleteModal">Удалить</a></li>-->--}}
 
-                                                    <li><a class="icon-trash-empty del d-flex align-items-center" href="{{ route("admin_blocks.blocks.delete",$row->id) }}" >Удалить без подтверждения</a></li>
+                                                    <li>
+                                                        <form action="{{ route("admin_blocks.blocks.delete",$row->id) }}" method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="icon-trash-empty del d-flex align-items-center border-0 bg-transparent">Удалить без подтверждения</button>
+                                                        </form>
+                                                    </li>
 
                                                 </ul>
 
@@ -290,13 +296,17 @@
 
 
 
-                                <a class="mr-0" href="{{ route("admin_blocks.blocks.toogle",$row->id) }}">
-                                @if($row->enable==1)
-                                    <i class="demo-icon icon-eye"></i>
-                                @else
-                                    <i class="demo-icon icon-eye-off"></i>
-                                @endif
-                                </a>
+                                <form action="{{ route("admin_blocks.blocks.toogle",$row->id) }}" method="POST">
+                                    @csrf
+                                    @method('PATCH')
+                                    <button type="submit" class="mr-0 border-0 bg-transparent" aria-label="{{ trans("admin_blocks::main.status") }}">
+                                        @if($row->enable==1)
+                                            <i class="demo-icon icon-eye"></i>
+                                        @else
+                                            <i class="demo-icon icon-eye-off"></i>
+                                        @endif
+                                    </button>
+                                </form>
 
 
 
@@ -356,7 +366,7 @@
 
 
 
-            </form>
+            </div>
 
 
 
